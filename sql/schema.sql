@@ -1,0 +1,7 @@
+CREATE TABLE player_scores (
+    id SERIAL PRIMARY KEY,
+    player_name VARCHAR(50) NOT NULL,
+    score INTEGER NOT NULL,
+    played_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
