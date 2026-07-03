@@ -1,5 +1,5 @@
 # VS Code
-.vscode/
+.vscode/*
 !.vscode/tasks.json
 
 # Input/Output files
@@ -25,6 +25,9 @@ build/
 *.zip
 *.tar.gz
 *.rar
+
+#exclude the postgresql jar file from being ignored
+!lib/postgresql-42.7.12.jar
 
 # JVM crash logs
 hs_err_pid*

@@ -7,7 +7,7 @@
       "command": "cmd.exe",
       "args": [
         "/c",
-        "cd /d \"${workspaceFolder}\" && javac src\\*.java && java -cp src Main"
+        "cd /d \"${workspaceFolder}\" && javac -cp \"lib\\*\" src\\game\\*.java src\\entities\\*.java src\\database\\*.java src\\model\\*.java && java -cp \"src;lib\\*\" game.Main"
       ],
       "group": {
         "kind": "build",
