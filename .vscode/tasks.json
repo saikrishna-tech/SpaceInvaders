@@ -2,26 +2,18 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "Compile & Run (input.txt → output.txt)",
+      "label": "Compile & Run Space Invaders",
       "type": "shell",
       "command": "cmd.exe",
       "args": [
         "/c",
-        "cd /d \"${workspaceFolder}\" && javac \"${relativeFile}\" && java ${relativeFileDirname}.${fileBasenameNoExtension} < input.txt > output.txt"
+        "cd /d \"${workspaceFolder}\" && javac src\\*.java && java -cp src Main"
       ],
       "group": {
         "kind": "build",
         "isDefault": true
-      }
-    },
-    {
-      "label": "Compile & Run (Terminal Input)",
-      "type": "shell",
-      "command": "cmd.exe",
-      "args": [
-        "/c",
-        "cd /d \"${workspaceFolder}\" && javac \"${relativeFile}\" && java ${relativeFileDirname}.${fileBasenameNoExtension}"
-      ]
+      },
+      "problemMatcher": []
     }
   ]
 }
