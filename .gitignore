@@ -1,0 +1,31 @@
+# VS Code
+.vscode/
+!.vscode/tasks.json
+
+# Input/Output files
+input.txt
+output.txt
+
+# Java compiled files
+*.class
+
+# Build folders
+bin/
+out/
+target/
+build/
+
+# Logs
+*.log
+
+# Archives
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# JVM crash logs
+hs_err_pid*
+replay_pid*
