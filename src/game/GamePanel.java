@@ -3,18 +3,28 @@ import java.awt.Color;
 import java.awt.Dimension;
 
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 import java.awt.Graphics;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 import entities.Player;
 import entities.Alien;
+import entities.Bullet;
 
-public class GamePanel extends JPanel implements java.awt.event.KeyListener {
+public class GamePanel extends JPanel implements java.awt.event.KeyListener, ActionListener {
 
     public static final int WIDTH = 800;
     public static final int HEIGHT = 600;
     private Player player;
     private Alien[] aliens;
+    private Timer timer;
+    private Bullet bullet;
+    private int score = 0;
+    private int alienDirection = 1;
+    private static final int ALIEN_SPEED = 2;
+
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -23,9 +33,18 @@ public class GamePanel extends JPanel implements java.awt.event.KeyListener {
 
         player.draw(g);
 
-        for (Alien alien : aliens) {
-            alien.draw(g);
+        if (bullet != null) {
+            bullet.draw(g);
         }
+
+        for (Alien alien : aliens) {
+            if (alien != null) {
+                alien.draw(g);
+            }
+        }
+
+        g.setColor(Color.WHITE);
+        g.drawString("Score: " + score, 20, 20);
 
     }
 
@@ -58,6 +77,9 @@ public class GamePanel extends JPanel implements java.awt.event.KeyListener {
             }
         }
 
+        timer = new Timer(16, this);
+        timer.start();
+
     }
 
 
@@ -73,6 +95,16 @@ public class GamePanel extends JPanel implements java.awt.event.KeyListener {
         }
 
         repaint();
+
+        if (e.getKeyCode() == java.awt.event.KeyEvent.VK_SPACE) {
+            if (bullet == null) {
+                bullet = new Bullet(
+                        player.getX() + Player.WIDTH / 2 - Bullet.WIDTH / 2,
+                        player.getY()
+                );
+            }
+        }
+
     }
 
     @Override
@@ -81,6 +113,62 @@ public class GamePanel extends JPanel implements java.awt.event.KeyListener {
 
     @Override
     public void keyTyped(java.awt.event.KeyEvent e) {
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        moveAliens();
+        if (bullet != null) {
+            bullet.move();
+
+            for (int i = 0; i < aliens.length; i++) {
+                if (aliens[i] != null &&
+                    bullet.getBounds().intersects(aliens[i].getBounds())) {
+
+                    aliens[i] = null;
+                    bullet = null;
+                    score += 10;
+                    break;
+                }
+            }
+
+            if (bullet != null && bullet.isOffScreen()) {
+                bullet = null;
+            }
+        }
+        repaint();
+
+    }
+
+
+    private void moveAliens() {
+        boolean changeDirection = false;
+        for (Alien alien : aliens) {
+            if (alien == null)
+                continue;
+            if (alienDirection == 1 &&
+                alien.getRight() >= WIDTH) {
+                changeDirection = true;
+            }
+            if (alienDirection == -1 &&
+                alien.getX() <= 0) {
+                changeDirection = true;
+            }
+        }
+        if (changeDirection) {
+            alienDirection *= -1;
+            for (Alien alien : aliens) {
+                if (alien != null) {
+                    alien.move(0, 20);
+                }
+            }
+        } else {
+            for (Alien alien : aliens) {
+                if (alien != null) {
+                    alien.move(ALIEN_SPEED * alienDirection, 0);
+                }
+            }
+        }
     }
 
 }
