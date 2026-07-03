@@ -15,4 +15,16 @@ public class Player {
         g.fillRect(x, y, WIDTH, HEIGHT);
     }
 
+    public void moveLeft() {
+    if (x > 0) {
+            x -= 10;
+        }
+    }
+
+    public void moveRight() {
+        if (x < GamePanel.WIDTH - WIDTH) {
+            x += 10;
+        }
+    }
+
 }

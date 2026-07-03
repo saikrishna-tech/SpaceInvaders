@@ -3,7 +3,7 @@ import java.awt.Dimension;
 
 import javax.swing.JPanel;
 
-public class GamePanel extends JPanel {
+public class GamePanel extends JPanel implements java.awt.event.KeyListener {
 
     public static final int WIDTH = 800;
     public static final int HEIGHT = 600;
@@ -20,6 +20,10 @@ public class GamePanel extends JPanel {
 
     public GamePanel() {
 
+        setFocusable(true);
+        requestFocus();
+        addKeyListener(this);
+
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
         setBackground(Color.BLACK);
@@ -30,6 +34,29 @@ public class GamePanel extends JPanel {
                 HEIGHT - 50
         );
 
+    }
+
+
+    @Override
+    public void keyPressed(java.awt.event.KeyEvent e) {
+
+        if (e.getKeyCode() == java.awt.event.KeyEvent.VK_LEFT) {
+            player.moveLeft();
+        }
+
+        if (e.getKeyCode() == java.awt.event.KeyEvent.VK_RIGHT) {
+            player.moveRight();
+        }
+
+        repaint();
+    }
+
+    @Override
+    public void keyReleased(java.awt.event.KeyEvent e) {
+    }
+
+    @Override
+    public void keyTyped(java.awt.event.KeyEvent e) {
     }
 
 }

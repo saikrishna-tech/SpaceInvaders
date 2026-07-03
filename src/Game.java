@@ -10,13 +10,15 @@ public class Game extends JFrame {
 
         setResizable(false);
 
-        add(new GamePanel());
+        GamePanel panel = new GamePanel();
+        add(panel);
 
         pack();
 
         setLocationRelativeTo(null);
 
         setVisible(true);
+        panel.requestFocus();
     }
 
 }
