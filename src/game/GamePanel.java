@@ -24,6 +24,8 @@ public class GamePanel extends JPanel implements java.awt.event.KeyListener, Act
     private int score = 0;
     private int alienDirection = 1;
     private static final int ALIEN_SPEED = 2;
+    private boolean gameOver = false;
+    private boolean gameWon = false;
 
 
     @Override
@@ -45,6 +47,14 @@ public class GamePanel extends JPanel implements java.awt.event.KeyListener, Act
 
         g.setColor(Color.WHITE);
         g.drawString("Score: " + score, 20, 20);
+
+        if (gameOver) {
+            g.drawString("GAME OVER", WIDTH / 2 - 40, HEIGHT / 2);
+        }
+
+        if (gameWon) {
+            g.drawString("YOU WIN!", WIDTH / 2 - 30, HEIGHT / 2);
+        }
 
     }
 
@@ -117,6 +127,10 @@ public class GamePanel extends JPanel implements java.awt.event.KeyListener, Act
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (gameOver || gameWon) {
+            repaint();
+            return;
+        }
         moveAliens();
         if (bullet != null) {
             bullet.move();
@@ -128,6 +142,16 @@ public class GamePanel extends JPanel implements java.awt.event.KeyListener, Act
                     aliens[i] = null;
                     bullet = null;
                     score += 10;
+                    boolean anyAliensLeft = false;
+                    for (Alien alien : aliens) {
+                        if (alien != null) {
+                            anyAliensLeft = true;
+                            break;
+                        }
+                    }
+                    if (!anyAliensLeft) {
+                        gameWon = true;
+                    }
                     break;
                 }
             }
@@ -167,6 +191,12 @@ public class GamePanel extends JPanel implements java.awt.event.KeyListener, Act
                 if (alien != null) {
                     alien.move(ALIEN_SPEED * alienDirection, 0);
                 }
+            }
+        }
+        for (Alien alien : aliens) {
+            if (alien != null &&
+                alien.getY() + Alien.HEIGHT >= player.getY()) {
+                gameOver = true;
             }
         }
     }
