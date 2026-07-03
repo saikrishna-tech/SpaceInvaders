@@ -1,3 +1,7 @@
+package entities;
+
+import game.GamePanel;
+
 public class Player {
 
     private int x;

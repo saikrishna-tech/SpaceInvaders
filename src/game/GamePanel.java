@@ -1,8 +1,13 @@
+package game;
 import java.awt.Color;
 import java.awt.Dimension;
 
 import javax.swing.JPanel;
+
 import java.awt.Graphics;
+
+import entities.Player;
+import entities.Alien;
 
 public class GamePanel extends JPanel implements java.awt.event.KeyListener {
 
